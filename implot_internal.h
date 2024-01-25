@@ -276,17 +276,17 @@ typedef void (*ImPlotLocator)(ImPlotTicker& ticker, const ImPlotRange& range, fl
 
 // Combined date/time format spec
 struct ImPlotDateTimeSpec {
-    ImPlotDateTimeSpec() {}
+    ImPlotDateTimeSpec() = default;
     ImPlotDateTimeSpec(ImPlotDateFmt date_fmt, ImPlotTimeFmt time_fmt, bool use_24_hr_clk = false, bool use_iso_8601 = false) {
         Date           = date_fmt;
         Time           = time_fmt;
         UseISO8601     = use_iso_8601;
         Use24HourClock = use_24_hr_clk;
     }
-    ImPlotDateFmt Date;
-    ImPlotTimeFmt Time;
-    bool UseISO8601;
-    bool Use24HourClock;
+    ImPlotDateFmt Date{0};
+    ImPlotTimeFmt Time{0};
+    bool UseISO8601{true};
+    bool Use24HourClock{true};
 };
 
 // Two part timestamp struct.
@@ -497,7 +497,7 @@ struct ImPlotTagCollection {
     ImPlotTagCollection() { Reset(); }
 
     void AppendV(ImAxis axis, double value, ImU32 bg, ImU32 fg, const char* fmt, va_list args) IM_FMTLIST(6) {
-        ImPlotTag tag;
+        ImPlotTag tag{0};
         tag.Axis = axis;
         tag.Value = value;
         tag.ColorBg = bg;
@@ -538,7 +538,7 @@ struct ImPlotTick
     bool   Major;
     bool   ShowLabel;
     int    Level;
-    int    Idx;
+    int    Idx{0};
 
     ImPlotTick(double value, bool major, int level, bool show_label) {
         PixelPos     = 0;
@@ -627,7 +627,7 @@ struct ImPlotAxis
     ImPlotAxisFlags      Flags;
     ImPlotAxisFlags      PreviousFlags;
     ImPlotRange          Range;
-    ImPlotCond           RangeCond;
+    ImPlotCond           RangeCond{0};
     ImPlotScale          Scale;
     ImPlotRange          FitExtents;
     ImPlotAxis*          OrthoAxis;
@@ -650,8 +650,8 @@ struct ImPlotAxis
     ImPlotTransform      TransformInverse;
     void*                TransformData;
     float                PixelMin, PixelMax;
-    double               ScaleMin, ScaleMax;
-    double               ScaleToPixel;
+    double               ScaleMin{ 0 }, ScaleMax{0};
+    double               ScaleToPixel{0};
     float                Datum1, Datum2;
 
     ImRect               HoverRect;
@@ -659,7 +659,7 @@ struct ImPlotAxis
     ImU32                ColorMaj, ColorMin, ColorTick, ColorTxt, ColorBg, ColorHov, ColorAct, ColorHiLi;
 
     bool                 Enabled;
-    bool                 Vertical;
+    bool                 Vertical{false};
     bool                 FitThisFrame;
     bool                 HasRange;
     bool                 HasFormatSpec;
