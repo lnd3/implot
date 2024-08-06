@@ -497,7 +497,7 @@ struct ImPlotTagCollection {
     ImPlotTagCollection() { Reset(); }
 
     void AppendV(ImAxis axis, double value, ImU32 bg, ImU32 fg, const char* fmt, va_list args) IM_FMTLIST(6) {
-        ImPlotTag tag{0};
+        ImPlotTag tag{};
         tag.Axis = axis;
         tag.Value = value;
         tag.ColorBg = bg;
